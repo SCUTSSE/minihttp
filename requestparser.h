@@ -11,18 +11,18 @@ class requestparser
 		{
 			good,bad,indeterminate
 		};
-		template <typename T>
+		template<typename T>
 		std::tuple<result_type,T> parse(request& req,T begin,T end)
 		{
 			while (begin!=end)
 			{
-				result_type result=consume(req, *begin++);
+				result_type result=consume(req,*begin++);
 				if (result==good || result==bad) return std::make_tuple(result,begin);
 			}
-			return std::make_tuple(indeterminate, begin);
+			return std::make_tuple(indeterminate,begin);
 		}
 	private:
-		result_type consume(request& req, char input);
+		result_type consume(request& req,char input);
 		static bool is_char(int c);
 		static bool is_ctl(int c);
 		static bool is_tspecial(int c);
@@ -49,6 +49,6 @@ class requestparser
 				header_value,
 				expecting_newline_2,
 				expecting_newline_3
-		} state_;
+		}state_;
 };
 #endif // HTTP_REQUEST_PARSER_HPP
