@@ -1,13 +1,11 @@
-#ifndef SRVREPLY_HEADER
-#define SRVREPLY_HEADER
-
+#pragma once
 #include <string>
 #include <vector>
 #include <boost/asio.hpp>
 #include "httpheader.h"
 struct reply
 {
-	enum status_type
+	enum status_type //返回值
 	{
 		ok=200,
 		created=201,
@@ -26,9 +24,8 @@ struct reply
 		bad_gateway=502,
 		service_unavailable=503
 	}status;
-	std::vector<header> headers;
-	std::string content;
-	std::vector<boost::asio::const_buffer> to_buffers();
+	std::vector<header> headers; //网页标头
+	std::string content; //内容
+	std::vector<boost::asio::const_buffer> to_buffers(); 
 	static reply stock_reply(status_type status);
 };
-#endif 

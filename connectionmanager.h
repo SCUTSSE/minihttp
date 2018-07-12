@@ -1,29 +1,26 @@
-
-#ifndef CONNECTIONMANAGER_HEADER
-#define CONNECTIONMANAGER_HEADER
+#pragma once
 #include<set>
 #include<boost/noncopyable.hpp>
 #include"connection.h"
-class connectionmanager:public boost::noncopyable
+class connectionmanager:public boost::noncopyable //连接管理
 {
 	public:
 		connectionmanager(){ };
-		void start(connection_ptr c)
+		void start(connection_ptr c)  //加入一个新连接
 		{
 			connections_.insert(c);
 			c->start();
 		}
-		void stop(connection_ptr c)
+		void stop(connection_ptr c) //关闭一个连接
 		{
 			connections_.erase(c);
 			c->stop();
 		}
-		void stop_all()
+		void stop_all() //断开全部连接
 		{
 			for (auto c:connections_) c->stop();
 			connections_.clear();
 		}
 	private:
-		std::set<connection_ptr> connections_;
+		std::set<connection_ptr> connections_; //连接的指针管理(shared_ptr)
 };
-#endif
