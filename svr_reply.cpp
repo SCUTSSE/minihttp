@@ -1,6 +1,6 @@
 #include "svr_reply.h"
 #include <string>
-namespace status_strings 
+namespace status_strings //状态字符串 
 {
 	const std::string ok="HTTP/1.0 200 OK\r\n";
 	const std::string created="HTTP/1.0 201 Created\r\n";
@@ -47,11 +47,11 @@ namespace misc_strings
 	const char name_value_separator[] = { ':', ' ' };
 	const char crlf[] = { '\r', '\n' }; //http nextline
 }
-std::vector<boost::asio::const_buffer> reply::to_buffers()
+std::vector<boost::asio::const_buffer> reply::to_buffers() //构造返回网页输出缓冲
 {
 	std::vector<boost::asio::const_buffer> buffers;
 	buffers.push_back(status_strings::to_buffer(status));
-	for (std::size_t i = 0; i < headers.size(); ++i)
+	for (unsigned i=0;i<headers.size();++i)
 	{
 		header& h = headers[i];
 		buffers.push_back(boost::asio::buffer(h.name));
@@ -63,7 +63,7 @@ std::vector<boost::asio::const_buffer> reply::to_buffers()
 	buffers.push_back(boost::asio::buffer(content));
 	return buffers;
 }
-namespace stock_replies 
+namespace stock_replies //对应返回页面html代码
 {
 	const char ok[] = "";
 	const char created[] =
@@ -165,7 +165,7 @@ namespace stock_replies
 		}
 	}
 }
-reply reply::stock_reply(reply::status_type status)
+reply reply::stock_reply(reply::status_type status) //构造返回
 {
 	reply rep;
 	rep.status = status;rep.content = stock_replies::to_string(status);rep.headers.resize(2);

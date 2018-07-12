@@ -1,18 +1,17 @@
-#ifndef REQUESTPARSER_HPP
-#define REQUESTPARSER_HPP
+#pragma once
 #include <tuple>
 struct request;
-class requestparser
+class requestparser 
 {
 	public:
-		requestparser();
-		void reset();
-		enum result_type 
+		requestparser():state_(method_start) {};
+		void reset(); //重置
+		enum result_type //3种状态
 		{
 			good,bad,indeterminate
 		};
 		template<typename T>
-		std::tuple<result_type,T> parse(request& req,T begin,T end)
+		std::tuple<result_type,T> parse(request& req,T begin,T end) //解析整个req 
 		{
 			while (begin!=end)
 			{
@@ -22,12 +21,12 @@ class requestparser
 			return std::make_tuple(indeterminate,begin);
 		}
 	private:
-		result_type consume(request& req,char input);
+		result_type consume(request& req,char input); //解析
 		static bool is_char(int c);
 		static bool is_ctl(int c);
 		static bool is_tspecial(int c);
 		static bool is_digit(int c);
-		enum state
+		enum state //当前解析状态
 		{
 				method_start,
 				method,
@@ -51,4 +50,3 @@ class requestparser
 				expecting_newline_3
 		}state_;
 };
-#endif // HTTP_REQUEST_PARSER_HPP
