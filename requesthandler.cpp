@@ -39,17 +39,17 @@ bool requesthandler::url_decode(const std::string& in, std::string& out)
 {
 	out.clear();
 	out.reserve(in.size());
-	for (unsigned i=0;i<in.size();++i)
+	for (int i=0;i<in.size();++i)
 	{
 		if (in[i]=='%')
 		{
 			if (i+3<=in.size())
 			{
-				int value = 0;
+				int prime = 0;
 				std::istringstream is(in.substr(i + 1,2));
-				if (is>>std::hex>>value)
+				if (is>>std::hex>>prime)
 				{
-					out+=static_cast<char>(value);
+					out+=static_cast<char>(prime);
 					i+=2;
 				}
 				else return false;

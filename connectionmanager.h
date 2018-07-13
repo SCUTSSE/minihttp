@@ -21,6 +21,5 @@ class connectionmanager:public boost::noncopyable //连接管理
 			for (auto c:connections_) c->stop();
 			connections_.clear();
 		}
-	private:
 		std::set<connection_ptr> connections_; //连接的指针管理(shared_ptr)
 };
