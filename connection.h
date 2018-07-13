@@ -14,7 +14,6 @@ class connection: public std::enable_shared_from_this<connection>,boost::noncopy
 		explicit connection(boost::asio::ip::tcp::socket socket, connectionmanager& manager, requesthandler& handler) :socket_(std::move(socket)), connection_manager_(manager), request_handler_(handler) {};
 		void start() { do_read(); } //开始读取
 		void stop() { do_write(); } //写入返回 
-	private:
 		void do_read(); //读取http请求
 		void do_write(); //写入http返回数据包
 		boost::asio::ip::tcp::socket socket_;  //socket套接字传输控制
