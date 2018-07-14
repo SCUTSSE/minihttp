@@ -1,6 +1,7 @@
 #pragma once
-#include <string>
-struct header //http请求头格式
+#include<string>
+using std::string;
+struct header
 {
-	std::string name,value; //name=value
+	string name, value;
 };
